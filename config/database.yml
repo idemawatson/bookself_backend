@@ -11,5 +11,5 @@ development:
   username: postgres
   password: <%= ENV["APP_DATABASE_PASSWORD"] %>
   port: 5432
-  # sslmode: verify-full
-  # sslrootcert: ./prod-ca-2021.crt
+  sslmode: verify-full
+  sslrootcert: prod-ca-2021.crt

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_01_17_124714) do
+ActiveRecord::Schema[7.0].define(version: 2023_01_18_063906) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_graphql"
   enable_extension "pg_stat_statements"
@@ -28,6 +28,23 @@ ActiveRecord::Schema[7.0].define(version: 2023_01_17_124714) do
   create_enum "key_status", ["default", "valid", "invalid", "expired"]
   create_enum "key_type", ["aead-ietf", "aead-det", "hmacsha512", "hmacsha256", "auth", "shorthash", "generichash", "kdf", "secretbox", "secretstream", "stream_xchacha20"]
 
+  create_table "books", force: :cascade do |t|
+    t.string "book_id", null: false
+    t.string "title", null: false
+    t.string "author"
+    t.string "image_url"
+    t.text "comment"
+    t.string "description"
+    t.boolean "completed"
+    t.integer "page_count"
+    t.date "publishedAt"
+    t.datetime "completedAt"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.bigint "user_id", null: false
+    t.index ["user_id"], name: "index_books_on_user_id"
+  end
+
   create_table "users", force: :cascade do |t|
     t.string "name"
     t.string "email"
@@ -35,4 +52,5 @@ ActiveRecord::Schema[7.0].define(version: 2023_01_17_124714) do
     t.datetime "updated_at", null: false
   end
 
+  add_foreign_key "books", "users"
 end
