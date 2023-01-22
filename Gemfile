@@ -55,3 +55,4 @@ end
 gem 'dotenv-rails'
 gem 'jwt'
 gem 'rack-cors'
+gem "kaminari"
