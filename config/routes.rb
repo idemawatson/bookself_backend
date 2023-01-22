@@ -4,4 +4,5 @@ Rails.application.routes.draw do
       resources :books
     end
   end
+  match '*path' => 'options_request#response_preflight_request', via: :options
 end
