@@ -1,5 +1,6 @@
 class OptionsRequestController < ApplicationController
-  ACCESS_CONTROL_ALLOW_HEADERS = %w[Origin Content-Type Accept Authorization Token Auth-Token Email X-User-Token X-User-Email].freeze
+  ACCESS_CONTROL_ALLOW_HEADERS = %w[Origin Content-Type Accept Authorization Token Auth-Token Email
+                                    X-User-Token X-User-Email].freeze
   ACCESS_CONTROL_ALLOW_METHODS = %w[GET POST PUT PATCH DELETE OPTIONS].freeze
   ACCESS_CONTROL_MAX_AGE = 86_400
 

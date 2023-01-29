@@ -18,8 +18,8 @@ require:
 
 ## 全体に適応する項目を定義します。ここで Exclude に設定したファイルは、チェック対象外になります。
 AllCops:
-  TargetRubyVersion: 2.6
-  TargetRailsVersion: 5.2
+  TargetRubyVersion: 3.2.0
+  TargetRailsVersion: 7.0.4
   Exclude:
     - "vendor/**/*"
     - "bin/**/*"
@@ -76,6 +76,7 @@ Layout/LineLength:
 Metrics/AbcSize:
   Exclude:
     - "lib/tasks/dev.rake"
+  Max: 50
 
 Metrics/BlockLength:
   CountComments: false
