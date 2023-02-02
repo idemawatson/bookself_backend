@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_01_29_084427) do
+ActiveRecord::Schema[7.0].define(version: 2023_02_01_055236) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_graphql"
   enable_extension "pg_stat_statements"
@@ -37,8 +37,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_01_29_084427) do
     t.string "description"
     t.boolean "completed"
     t.integer "page_count"
-    t.string "publishedAt"
-    t.datetime "completedAt"
+    t.string "published_at"
+    t.datetime "completed_at"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.bigint "user_id", null: false

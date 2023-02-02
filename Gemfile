@@ -54,3 +54,6 @@ gem 'dotenv-rails'
 gem 'jwt'
 gem "kaminari"
 gem 'rack-cors'
+
+# json serializers
+gem 'active_model_serializers'

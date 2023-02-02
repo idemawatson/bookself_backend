@@ -1,18 +1,17 @@
 class Api::V1::BooksController < SecuredController
   def index
-    books = @current_user.books.page(params.fetch(:page, 1)).per(12)
+    @books = @current_user.books.page(params.fetch(:page, 1)).per(12)
     total_pages = @current_user.books.page.per(12).total_pages
-    render json: { books:, total_pages: }
+    render json: @books, each_serializer: BookSerializer, meta: { total_pages: }, adapter: :json
   end
 
   def show
     book = Book.find(params[:id])
-    render json: book
+    render json: book, each_serializer: BookSerializer
   end
 
   def create
-    book = @current_user.books.create(book_id: params[:id], title: params[:title], image_url: params[:imageUrl], author: params[:author],
-                                      page_count: params[:pageCount], publishedAt: params[:publishedDate], description: params[:description])
+    book = @current_user.books.create(**params.permit(:title, :image_url, :author, :page_count, :published_at, :description), book_id: params[:id])
     if book.valid?
       render json: { result: "ok" }
     elsif book.errors.full_messages_for(:book_id)
