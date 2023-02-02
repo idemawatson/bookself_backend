@@ -1,0 +1,9 @@
+class ChangeBooksCompletedToStatus < ActiveRecord::Migration[7.0]
+  def up
+    remove_column :books, :completed
+  end
+
+  def down
+    add_column :books, :completed, :boolean
+  end
+end

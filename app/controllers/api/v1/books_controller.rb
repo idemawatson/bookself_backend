@@ -1,6 +1,6 @@
 class Api::V1::BooksController < SecuredController
   def index
-    @books = @current_user.books.page(params.fetch(:page, 1)).per(12)
+    @books = @current_user.books.order(completed_at: :asc).page(params.fetch(:page, 1)).per(12)
     total_pages = @current_user.books.page.per(12).total_pages
     render json: @books, each_serializer: BookSerializer, meta: { total_pages: }, adapter: :json
   end
@@ -19,5 +19,10 @@ class Api::V1::BooksController < SecuredController
     else
       render json: { type: "invalid-request" }, status: :bad_request
     end
+  end
+
+  def update
+    @book = @current_user.books.find(params[:id])
+    @book.update(**params.permit(:comment, :status, :completed_at))
   end
 end

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_02_01_055236) do
+ActiveRecord::Schema[7.0].define(version: 2023_02_02_054734) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_graphql"
   enable_extension "pg_stat_statements"
@@ -35,13 +35,13 @@ ActiveRecord::Schema[7.0].define(version: 2023_02_01_055236) do
     t.string "image_url"
     t.text "comment"
     t.string "description"
-    t.boolean "completed"
     t.integer "page_count"
     t.string "published_at"
     t.datetime "completed_at"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.bigint "user_id", null: false
+    t.integer "status", default: 0, null: false
     t.index ["user_id", "book_id"], name: "index_books_on_user_id_and_book_id", unique: true
     t.index ["user_id"], name: "index_books_on_user_id"
   end
