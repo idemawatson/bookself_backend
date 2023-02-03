@@ -11,18 +11,23 @@ class Api::V1::BooksController < SecuredController
   end
 
   def create
-    book = @current_user.books.create(**params.permit(:title, :image_url, :author, :page_count, :published_at, :description), book_id: params[:id])
-    if book.valid?
-      render json: { result: "ok" }
-    elsif book.errors.full_messages_for(:book_id)
-      render json: { type: "duplicate-book", title: "既に本棚に追加済みです" }, status: :bad_request
-    else
-      render json: { type: "invalid-request" }, status: :bad_request
+    @book = @current_user.books.build(**params.permit(:book_id, :title, :image_url, :author, :page_count, :published_at, :description, :status))
+    if @book.completed?
+      @book.completed_at = Time.current.strftime('%Y-%m-%d')
     end
+
+    if @book.invalid? && @book.errors.full_messages_for(:book_id)
+      render json: { type: "duplicate-book", title: "既に本棚に追加済みです", status: 400 }, status: :bad_request
+      return
+    end
+
+    @book.save!
+    render json: { result: "ok" }
   end
 
   def update
     @book = @current_user.books.find(params[:id])
-    @book.update(**params.permit(:comment, :status, :completed_at))
+    @book.update!(**params.permit(:comment, :status, :completed_at))
+    render json: { result: "ok" }
   end
 end
