@@ -1,8 +1,14 @@
 class Api::V1::BooksController < SecuredController
   def index
-    @books = @current_user.books.order(completed_at: :asc).page(params.fetch(:page, 1)).per(12)
-    total_pages = @current_user.books.page.per(12).total_pages
-    render json: @books, each_serializer: BookSerializer, meta: { total_pages: }, adapter: :json
+    status = params.fetch(:status, -1).to_i
+    @books = @current_user.books
+                          .yield_self { |scope| status < 0 ? scope : scope.where(status:) }
+                          .order("completed_at DESC NULLS LAST")
+                          .order(updated_at: :desc)
+                          .page(params.fetch(:page, 1))
+                          .per(12)
+    total_page = @books.total_pages.yield_self { |pages| pages === 0 ? 1 : pages }
+    render json: @books, each_serializer: BookSerializer
   end
 
   def show
