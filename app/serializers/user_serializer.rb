@@ -1,3 +1,5 @@
 class UserSerializer < ActiveModel::Serializer
-  attributes :id
+  attributes %i[id name email]
+  has_many :followings
+  has_many :followers
 end
