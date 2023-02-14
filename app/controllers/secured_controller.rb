@@ -9,7 +9,6 @@ class SecuredController < ApplicationController
       unless @current_user
         render json: { error: 'User not exists' }, status: :unauthorized
       end
-      @current_user
     rescue JWT::VerificationError, JWT::DecodeError
       render json: { error: 'Not Authenticated' }, status: :unauthorized
     end
