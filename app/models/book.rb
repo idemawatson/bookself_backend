@@ -4,6 +4,8 @@ class Book < ApplicationRecord
   validates :book_id, uniqueness: { scope: :user_id, message: "既に本棚に登録済みです。" }
   validates :title, presence: true
   validates :comment, length: { maximum: 1000 }
+  validates :description, length: { maximum: 1000 }
+  validates :page_count, allow_nil: true, numericality: { only_integer: true }
 
   validate :valid_completed_at
 
