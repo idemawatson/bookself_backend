@@ -23,7 +23,7 @@ class User < ApplicationRecord
     followings.exists?(id: user_id)
   end
 
-  def add_experience(points)
+  def add_experience!(points)
     self.experience += points
     while self.experience >= next_level_experience
       self.experience -= next_level_experience
@@ -45,10 +45,11 @@ class User < ApplicationRecord
   end
 
   def rest_experience
+    logger.debug("next: #{next_level_experience}, self: #{self.experience}, prev: #{pre_level_experiense}")
     next_level_experience - self.experience
   end
 
   def progress
-    rest_experience.fdiv(next_level_experience - pre_level_experiense).floor(2) * 100
+    rest_experience.fdiv(next_level_experience).floor(2) * 100
   end
 end
